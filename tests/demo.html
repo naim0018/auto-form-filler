@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Auto Form Filler — Test Playground</title>
+<style>body{font:15px system-ui;background:#f5f8f5;color:#183c30;max-width:950px;margin:40px auto;padding:0 24px}h1{letter-spacing:-1px}form{background:white;border:1px solid #dae5dc;border-radius:16px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:18px}label{display:grid;gap:6px}input,select,textarea,button{font:inherit;padding:9px;border:1px solid #afc5b7;border-radius:6px}fieldset{border:1px solid #afc5b7;border-radius:6px}fieldset label,.check{display:flex;align-items:center}textarea{min-height:85px}button{background:#176b54;color:white;cursor:pointer}#menu{border:1px solid #afc5b7;padding:8px}[role=option]{padding:6px;cursor:pointer}small{color:#60766a}</style></head><body>
+<h1>Test data, without the typing.</h1><p>Open Auto Form Filler and click <strong>Fill this page</strong>. This playground never sends data anywhere.</p>
+<form id="signup">
+<label>First name<input name="firstName" required></label><label>Last name<input name="lastName" required></label>
+<label>Email<input type="email" name="email" required></label><label>Confirm email<input type="email" name="confirmEmail" required></label>
+<label>Password<input type="password" name="password" minlength="10" required></label><label>Confirm password<input type="password" name="confirmPassword" required></label>
+<label>Phone<input type="tel" name="phone" required></label><label>Date of birth<input type="date" name="birthDate" required></label>
+<label>Country<select name="country" required><option value="">Choose country</option><option value="US">United States</option><option value="BD">Bangladesh</option><option value="GB">United Kingdom</option></select></label>
+<label>State<select name="state" required><option value="">Choose state</option><option value="MA">Massachusetts</option><option>Dhaka</option><option>London</option></select></label>
+<label>City<input name="city" required></label><label>Postal code<input name="postalCode" required></label>
+<label>Address<input name="streetAddress" required></label><label>Company<input name="company"></label>
+<label>Website<input type="url" name="website"></label><label>Quantity<input type="number" name="quantity" min="5" max="20" step="3" required></label>
+<label>Support topic<select name="topic" required><option value="0">Select an option</option><option disabled>Unavailable</option><optgroup label="Archived" disabled><option>Old option</option></optgroup><option value="product">Product question</option><option value="pricing">Pricing</option></select></label>
+<label>Interests<select name="interests" multiple><option disabled>Select interests</option><option value="design">Design</option><option value="development">Development</option></select></label>
+<fieldset><legend>Contact preference</legend><label><input type="radio" name="contact" value="email">Email</label><label><input type="radio" name="contact" value="phone">Phone</label></fieldset>
+<fieldset><legend>Checkboxes</legend><label><input id="terms" type="checkbox" required>I agree to the test terms</label><label><input id="newsletter" type="checkbox">Test newsletter</label><label><input id="disabledCheck" type="checkbox" disabled>Disabled checkbox</label></fieldset>
+<label>Message<textarea name="message" required></textarea></label><label>Preserved note<input id="existing" name="note" value="Keep my original text"></label>
+<label>Six digit reference<input name="reference" pattern="[0-9]{6}" required></label><label>Read-only<input id="readonly" readonly value="Do not change"></label>
+<div><span id="deptLabel">Department</span><button type="button" role="combobox" aria-labelledby="deptLabel" aria-controls="menu" aria-expanded="false" id="department">Choose department</button><div id="menu" role="listbox" hidden><div role="option" data-value="engineering">Engineering</div><div role="option" data-value="support">Support</div></div></div>
+<label>Appears after country change<span id="dependent"></span></label>
+<input id="hidden" type="hidden" value="secret"><label style="display:none">Hidden text<input id="hiddenText"></label>
+<button id="submit" type="submit">Check form validation</button><output id="result"></output>
+</form><p><small>Dummy values are for testing. No mailboxes or phone numbers are provisioned.</small></p>
+<script>
+window.submitCount=0;window.changes=0;window.inputs=0;
+document.addEventListener('change',()=>window.changes++);document.addEventListener('input',()=>window.inputs++);
+document.getElementById('signup').addEventListener('submit',event=>{event.preventDefault();window.submitCount++;document.getElementById('result').textContent='Valid. No data was sent.'});
+document.querySelector('select[name=country]').addEventListener('change',()=>{if(!document.querySelector('#dependent input'))document.querySelector('#dependent').innerHTML='<input name="jobTitle" required>'});
+const combo=document.getElementById('department'),menu=document.getElementById('menu');combo.addEventListener('click',()=>{menu.hidden=!menu.hidden;combo.setAttribute('aria-expanded',String(!menu.hidden))});
+menu.addEventListener('click',event=>{const option=event.target.closest('[role=option]');if(option){combo.textContent=option.textContent;combo.setAttribute('aria-valuetext',option.textContent);combo.setAttribute('aria-expanded','false');menu.hidden=true;}});
+</script></body></html>

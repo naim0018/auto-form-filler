@@ -5,7 +5,7 @@
   "description": "Offline browser extension for filling test forms",
   "scripts": {
     "test": "node tests/check.mjs",
-    "build": "node build.mjs"
+    "build": "node api.js && node build.mjs"
   },
   "devDependencies": {
     "esbuild": "0.25.12",
